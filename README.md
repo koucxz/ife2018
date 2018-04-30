@@ -3,8 +3,8 @@
 [主页](http://ife.baidu.com/)
 ```
 ├── MVVM 
-|   ├── build 
-|   └── src 
+|   ├── san 
+|   |   └── src 
 └── README 
 ```
 
