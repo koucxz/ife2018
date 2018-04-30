@@ -25,8 +25,8 @@ module.exports = function(env)  {
           include: path.resolve(__dirname, "src"),
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
-            plugins: ['@babel/transform-runtime']
+            presets: ['babel-preset-env'],
+            plugins: ['babel-plugin-transform-runtime']
           }
         },
         {
