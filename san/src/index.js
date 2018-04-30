@@ -1,14 +1,18 @@
-import san from 'san';
+import {Component} from 'san';
 
-const MyApp = san.defineComponent({
-  template: '<p>Hello {{name}}!</p>',
+class HelloComponent extends Component {
 
-  initData: function () {
-    return {
-      name: 'San'
-    };
-  }
-});
+    constructor(options) {
+        super(options);
+    }
 
-const myApp = new MyApp();
-myApp.attach(document.body);
+    static template = `
+      <p>Hello {{name}}!</p>
+    `;
+
+    initData() {
+        return {name: 'San'}
+    }
+}
+
+new HelloComponent().attach(document.body);

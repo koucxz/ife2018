@@ -23,11 +23,7 @@ module.exports = function(env)  {
         {
           test: /\.js$/,
           include: path.resolve(__dirname, "src"),
-          loader: 'babel-loader',
-          options: {
-            presets: ['babel-preset-env'],
-            plugins: ['babel-plugin-transform-runtime']
-          }
+          loader: 'babel-loader'
         },
         {
           test: /\.css$/,
