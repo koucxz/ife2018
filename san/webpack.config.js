@@ -1,11 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = function(env)  {
   return {
     mode: env.production ? 'production' : 'development',
-    entry: './src/index.js',
+    entry: ['webpack-hot-middleware/client?reload=true', './src/index.js'],
     output: {
       filename: 'bundle.js',
       path: path.resolve(__dirname, 'dist'),
@@ -16,7 +17,8 @@ module.exports = function(env)  {
       new CleanWebpackPlugin(['dist']),
       new HtmlWebpackPlugin({
         title: 'san'
-      })
+      }),
+      new webpack.HotModuleReplacementPlugin()
     ],
     module: {
       rules: [
