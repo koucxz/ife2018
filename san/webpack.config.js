@@ -16,7 +16,7 @@ module.exports = function(env)  {
     plugins: [
       new CleanWebpackPlugin(['dist']),
       new HtmlWebpackPlugin({
-        title: 'san'
+        template: './index.html'
       }),
       new webpack.HotModuleReplacementPlugin()
     ],
