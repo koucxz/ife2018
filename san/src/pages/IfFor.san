@@ -1,0 +1,96 @@
+<template>
+  <div class="container">
+    <button on-click="add">添加</button>
+    <table class="k-table">
+      <thead>
+        <th class="k-th">姓名</th>
+        <th class="k-th">审核状态</th>
+        <th class="k-th">操作</th>
+      </thead>
+      <tbody s-for="p, i in list">
+        <td class="k-td">{{p.name}}</td>
+        <td class="k-td">{{p.verified | verifyFormat}}</td>
+        <td class="k-td">
+          <button s-if="!p.verified" on-click="verify(i)">审核</button>
+          <button s-else on-click="delete(i)">删除</button>
+        </td>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+  import { DataTypes } from 'san'
+  export default {
+    // 校验列表数据类型
+    dataTypes: {
+      list: DataTypes.arrayOf(DataTypes.shape({
+        name: DataTypes.string,
+        verified: DataTypes.number
+      }))
+    },
+    initData: function () {
+      return {
+        list: [
+          { name: '张三', verified: -1 },
+          { name: '李四', verified: 1 },
+          { name: '李四', verified: 0 }
+        ]
+      }
+    },
+    filters: {
+      verifyFormat: function (value) {
+        switch (value) {
+          case -1:
+            return '不合格'
+          case 0:
+            return '待审核'
+          case 1:
+            return '合格'
+        }
+      }
+    },
+    add() {
+      let name = prompt("请输入姓名")
+      if (name!==null && name!=="") {
+        this.data.unshift('list', {
+          name,
+          verified: 0
+        })
+      }
+      
+    },
+    verify(i) {
+      const v = confirm("是否合格？")
+      if (v === true) {
+        this.data.set(`list[${i}].verified`, 1)
+      } else {
+        this.data.set(`list[${i}].verified`, -1)
+      }
+    },
+    delete(i) {
+      const v = confirm("确认删除")
+      if (v === true) {
+        this.data.removeAt('list', i)
+      }
+    }
+  }
+</script>
+
+<style>
+  .container {
+    padding: 8px;
+  }
+  .k-table {
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: left;
+    border: 1px solid #ccc;
+  }
+  .k-th,
+  .k-td {
+    min-width: 35px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+</style>
