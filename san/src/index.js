@@ -1,14 +1,41 @@
-import san from 'san';
+import {Component} from 'san';
 
-const MyApp = san.defineComponent({
-  template: '<p>Hello {{name}}!</p>',
+class HelloComponent extends Component {
 
-  initData: function () {
-    return {
-      name: 'San'
-    };
-  }
-});
+    constructor(options) {
+        super(options);
+    }
 
-const myApp = new MyApp();
-myApp.attach(document.body);
+    static template = `
+      <div>
+        <form>
+          <input type="text" value="{= name =}" placeholder="姓名(string)">
+          <input type="number" value="{= age =}" placeholder="年龄(number)">
+          <input type="text" value="{= des =}" placeholder="简介(string)">
+        </form>
+        <div>
+          信息: <button on-click="delete">移除信息</button>
+        </div>
+        <!-- 数据空时显示下划线 -->
+        <p>姓名：{{name || '_________'}}</p>
+        <p>年龄：{{age || '_________'}}</p>
+        <p>简介：{{des || '_________'}}</p>
+      </div>
+    `;
+
+    initData() {
+        return {
+          name: '',
+          age: '',
+          des: ''
+        }
+    }
+    
+    delete() {
+      this.data.set('name', '')
+      this.data.set('age', '')
+      this.data.set('des', '')
+    }
+}
+
+new HelloComponent().attach(document.body);
