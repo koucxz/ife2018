@@ -1,0 +1,36 @@
+<template>
+  <div>
+    <div id="block" class="block {{isBlue ? 'blue' : 'red'}}" on-click="changeColor"></div>
+    <p>上方通过class切换，下方通过style切换</p>
+    <div id="block1" class="block" style="background-color:{{isBlue ? 'blue' : 'red'}}" on-click="changeColor"></div>
+  </div>
+</template>
+
+<script>
+export default {
+  initData: function () {
+    return {
+      isBlue: false
+    }
+  },
+
+  changeColor() {
+    var isBlue = this.data.get('isBlue');
+    this.data.set('isBlue', !isBlue);
+  }
+}
+</script>
+
+<style>
+  .block {
+    margin-bottom: 10px;
+    width: 100px;
+    height: 100px;
+  }
+  .red {
+    background-color: red;
+  }
+  .blue {
+    background-color: blue;
+  }
+</style>
