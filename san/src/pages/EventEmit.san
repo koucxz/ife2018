@@ -1,0 +1,104 @@
+<template>
+  <div>
+    <ui-parent on-update="getParentText"></ui-parent>
+    <div class="{{ancText ? 'anc' : ''}}">我是更高层父组件：{{ancText || "我也静静等待用户输入"}}</div>
+  </div>
+</template>
+
+<script>
+import {Component} from 'san';
+
+class Child extends Component {
+  constructor(options) {
+      super(options);
+  }
+
+  static template = `<form on-submit="fireText">
+  子组件<input type="text" value="{= childText =}"/>
+  <button type="button">通知父组件</button>
+  </form>`;
+
+  initData () {
+    return {
+      childText: ''
+    };
+  }
+
+  fireText (e) {
+    e.preventDefault();
+    this.fire('update', this.data.get('childText'));
+  }
+}
+
+class Parent extends Component {
+  constructor(options) {
+      super(options);
+  }
+
+  static template = `<div>
+    <ui-child s-ref="child" @on-update="getChildText"></ui-child>
+    <div s-if="!isEditing" class="{{parentText ? 'parent' : ''}}">
+      我是父组件：{{parentText || "静静等待用户输入"}}
+      <button on-click="startEdit">编辑</button>
+    </div>
+    <form s-else on-submit="saveEdit">
+      我是父组件：<input placeholder="保存后更新子组件及更高父组件" type="text" value="{= parentText =}"/>
+      <button>保存</button>
+    </form>
+  </div>`;
+
+  static components = {
+    'ui-child': Child
+  }
+
+  initData () {
+    return {
+      parentText: '',
+      isEditing: false
+    };
+  }
+
+  getChildText (childText) {
+    this.data.set('parentText', childText)
+    this.fireParentText()
+  }
+
+  fireParentText () {
+    this.fire('update', this.data.get('parentText'));
+  }
+
+  startEdit () {
+    this.data.set('isEditing', true)
+  }
+
+  saveEdit (e) {
+    e.preventDefault();
+    this.data.set('isEditing', false)
+    this.fireParentText()
+    this.ref('child').data.set('childText', this.data.get('parentText'));
+  }
+}
+
+export default {
+  initData () {
+    return {
+      ancText: ''
+    }
+  },
+  components: {
+    'ui-parent': Parent
+  },
+  getParentText (parentText) {
+    this.data.set('ancText', parentText)
+  }
+}
+</script>
+
+<style>
+.parent {
+  color: lightgreen;
+}
+.anc {
+  color: plum;
+}
+</style>
