@@ -1,0 +1,31 @@
+<template>
+  <input
+    type="text"
+    value="{= value =}"
+    placeholder="{{placeholder}}"
+    disabled="{{disabled}}"
+    readonly="{{readonly}}"
+    on-input="onInput"
+    on-focus="onFocus"
+    on-blur="onBlur">
+</template>
+
+<script>
+/**
+  * @props
+  * placeholder {String}
+  * disabled {Boolean}
+  * readonly {Boolean}
+*/
+export default {
+  onInput (e) {
+    this.fire('input', e)
+  },
+  onFocus (e) {
+    this.fire('focus', e)
+  },
+  onBlur (e) {
+    this.fire('blur', e)
+  },
+}
+</script>

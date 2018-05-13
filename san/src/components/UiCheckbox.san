@@ -1,0 +1,100 @@
+<template>
+  <div class="ui-checkbox_container">
+    <input
+      class="ui-checkbox{{indeterminate ? ' indeterminate':''}}"
+      id="{{checkboxId}}"
+      type="checkbox"
+      value="{{value}}"
+      disabled="{{disabled}}"
+      checked="{= checkedArr =}"
+      on-change="onChange">
+    <label for="{{checkboxId}}" class="ui-checkbox_label"></label>
+    <!-- 文字slot -->
+    <slot></slot>
+  </div>
+</template>
+
+<script>
+/**
+  * @props
+  * checked {Boolean, String} default:false 组件的值，如果使用了trueValue和falseValue则为对应字符串，否则为boolean
+  * disabled {Boolean} default:false 是否禁用当前项
+  * trueValue {String} 选中时的值
+  * falseValue {String} 未选中时的值
+  * indeterminate {Boolean} default:false 设置 indeterminate 状态，只负责样式控制
+*/
+export default {
+  initData () {
+    return {
+      checkedArr: [],
+      checkboxId: +new Date()
+    }
+  },
+  computed: {
+    // 选中值指示，san 表单 value
+    value () {
+      return this.data.get('trueValue') || 'true'
+    }
+  },
+  onChange (e) {
+    this.fire('change', e)
+  },
+  inited () {
+    const trueValue = this.data.get('trueValue')
+    const falseValue = this.data.get('falseValue')
+    const checked = this.data.get('checked')
+    if (!checked) {
+      this.data.set('checked', false)
+    }
+    if (checked === trueValue) {
+      this.data.set('checkedArr', [checked])
+    } else if (checked === 'true') {
+      this.data.set('checkedArr', ['true'])
+    } else {
+      this.data.set('checkedArr', [])
+    }
+    // checkbox 变化时设置 prop checked值
+    this.watch('checkedArr', value => {
+      let val
+      if (value.length === 1) {
+        val = value[0]
+      } else if (trueValue) {
+        val = falseValue
+      } else {
+        val = false
+      }
+      if (val === 'true') {
+        val = true
+      }
+      this.data.set('checked', val)
+    });
+  }
+}
+</script>
+
+<style>
+.ui-checkbox_container {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+  color: #ccc;
+}
+.ui-checkbox {
+  display: none;
+}
+.ui-checkbox_label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-size: 100% 100%;
+  background-image: url('~@assets/check-empty.svg');
+}
+.ui-checkbox[type="checkbox"]:checked+.ui-checkbox_label::before {
+  background-image: url('~@assets/check-tick.svg');
+}
+.indeterminate[type="checkbox"]:checked+.ui-checkbox_label::before{
+  background-image: url('~@assets/check-inde.svg');
+}
+</style>

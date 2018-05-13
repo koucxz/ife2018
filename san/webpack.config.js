@@ -20,6 +20,13 @@ module.exports = function(env)  {
       }),
       new webpack.HotModuleReplacementPlugin()
     ],
+    resolve: {
+      alias: {
+        '@assets': path.resolve(__dirname, 'src/assets/'),
+        '@comp': path.resolve(__dirname, 'src/components/'),
+        '@pages': path.resolve(__dirname, 'src/pages/')
+      }
+    },
     module: {
       rules: [
         {

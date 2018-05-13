@@ -1,0 +1,39 @@
+<template>
+  <div>
+    <div>
+      <san-input
+        value="{= name =}"
+        placeholder="请输入">
+      </san-input>
+    </div>
+    <div>
+      <san-checkbox
+        trueValue='selected'
+        checked="{= checked =}">
+        选中
+      </san-checkbox>
+      <san-checkbox
+        indeterminate
+        checked="{= indeChecked =}">
+        部分选中
+      </san-checkbox>
+    </div>
+  </div>
+</template>
+
+<script>
+import UiInput from '@comp/UiInput.san'
+import UiCheckbox from '@comp/UiCheckbox.san'
+export default {
+  initData: function () {
+    return {
+      name: '',
+      checked: false,
+      indeChecked: true
+    }
+  },
+  components: {
+    'san-input': UiInput, 'san-checkbox': UiCheckbox
+  }
+}
+</script>
