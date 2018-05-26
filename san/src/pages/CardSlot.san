@@ -1,0 +1,79 @@
+<template>
+  <div class="card-container">
+    <h2 class="card-title">任务栏</h2>
+    <div class="cards">
+      <san-card class="card" s-for="item in cardList">
+        <span slot="label">{{item.label}}</span>
+        <span slot="title">{{item.title}}</span>
+        <span slot="content">{{item.content}}</span>
+        <span slot="time">{{item.time}}</span>
+      </san-card>
+    </div>
+  </div>
+</template>
+
+<style>
+  .card-container {
+    margin: 0 auto;
+    max-width: 980px;
+  }
+  .card-title {
+    padding: 40px 0 30px;
+    margin: 0;
+    text-align: center;
+    font-weight: normal;
+  }
+  .cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .card {
+    margin-bottom: 20px;
+    width: 30%;
+  }
+</style>
+
+<script>
+import UiCard from '@comp/UiCard.san'
+export default {
+  initData: function () {
+    return {
+      cardList: [{
+        label: '任务一',
+        title: '插槽一',
+        content: '内容一',
+        time: '2018.5.20 16:59'
+      }, {
+        label: '任务二',
+        title: '插槽二',
+        content: '内容二',
+        time: '2018.5.20 16:59'
+      }, {
+        label: '任务三',
+        title: '插槽三',
+        content: '内容三',
+        time: '2018.5.20 16:59'
+      }, {
+        label: '任务四',
+        title: '插槽四',
+        content: '内容四',
+        time: '2018.5.20 16:59'
+      }, {
+        label: '任务五',
+        title: '插槽五',
+        content: '内容五',
+        time: '2018.5.20 16:59'
+      }, {
+        label: '任务六',
+        title: '插槽六',
+        content: '内容六',
+        time: '2018.5.20 16:59'
+      }]
+    }
+  },
+  components: {
+    'san-card': UiCard
+  }
+}
+</script>

@@ -36,3 +36,6 @@
 - [Input](https://github.com/koucxz/ife2018/tree/2.5/san/src/components/UiInput.san)
 - [Chechbox](https://github.com/koucxz/ife2018/tree/2.5/san/src/components/UiChechbox.san)
 利用san提供的API实现简单的表单控件
+
+[2.6](https://github.com/koucxz/ife2018/tree/2.6/san/src/pages/CardSlot.san)
+- [Card](https://github.com/koucxz/ife2018/tree/2.6/san/src/components/UiCard.san)

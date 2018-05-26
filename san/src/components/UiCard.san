@@ -1,0 +1,55 @@
+<template>
+  <div class="ui-card">
+    <div class="ui-card_main">
+      <div class="ui-card_label">
+        <slot name="label"></slot>
+      </div>
+      <div class="ui-card_board">
+        <div class="ui-card_text">
+          标题：<slot name="title"></slot>
+        </div>
+        <div class="ui-card_text">
+          内容：<slot name="content"></slot>
+        </div>
+        <div class="ui-card_text">
+          时间：<slot name="time"></slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+  .ui-card {
+    padding: 5px;
+    background-color: pink;
+    border-radius: 3px;
+  }
+  .ui-card_main {
+    padding: 15px 30px 25px;
+    border: 2px solid salmon;
+  }
+  .ui-card_label {
+    margin: 0 auto 30px;
+    width: 140px;
+    font-size: 24px;
+    line-height: 1.5;
+    text-align: center;
+    color: red;
+    background-color: orange;
+  }
+  .ui-card_board {
+    padding: 10px 5px 10px 20px;
+    background: sandybrown;
+  }
+  .ui-card_text {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+</style>
