@@ -39,3 +39,5 @@
 
 [2.6](https://github.com/koucxz/ife2018/tree/2.6/san/src/pages/CardSlot.san)
 - [Card](https://github.com/koucxz/ife2018/tree/2.6/san/src/components/UiCard.san)
+
+[2.7](https://github.com/koucxz/ife2018/tree/2.7/san/src/pages/TransDirect.san)

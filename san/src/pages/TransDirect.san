@@ -1,0 +1,61 @@
+<template>
+<div>
+  <button on-click="toggle">TOGGLE</button>
+  <span s-if="show" s-transition="hook">
+    Transition Layer
+  </span>
+</div>
+</template>
+
+<script>
+let animationing = false
+export default {
+  initData() {
+    return { show: true }
+  },
+  toggle() {
+    if (animationing) { return }
+    this.data.set('show', !this.data.get('show'))
+  },
+  hook () {
+    const san = this
+    return {
+      enter: (el, done) => {
+        animationing = true
+        el.className = 'before-enter'
+        setTimeout(() => {
+          el.className = 'enter'
+        }, 100)
+        el.addEventListener('transitionend', e => {
+          animationing = false
+          done()
+        })
+      },
+
+      leave: (el, done) => {
+        animationing = true
+        el.className = 'before-leave'
+        el.className = 'leave'
+        el.addEventListener('transitionend', e => {
+          animationing = false
+          done()
+        })
+      }
+    }
+  }
+}
+</script>
+
+<style>
+.enter, .leave {
+  transition: all .5s;
+}
+
+.before-enter, .leave {
+  opacity: 0;
+}
+
+.enter, .before-leave {
+  opacity: 1;
+}
+</style>
