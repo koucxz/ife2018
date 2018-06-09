@@ -1,0 +1,44 @@
+<template>
+  <div class="san-cascader">
+    <input class="san-cascader-input" value="{{label || '请选择'}}" on-click="openList" readonly/>
+    <san-cascader-item
+      s-if="{{listVisible}}"
+      label="{= label =}"
+      value="{= value =}"
+      list="{{list}}"></san-cascader-item>
+  </div>
+</template>
+<script>
+  import UiCascaderItem from './UiCascaderItem.san'
+  export default {
+    components: {
+      'san-cascader-item': UiCascaderItem
+    },
+    initData() {
+      return {
+        label: '',
+        value: '',
+        listVisible: false
+      }
+    },
+    openList(e) {
+      this.data.set('listVisible', true);
+    },
+    created () {
+      document.addEventListener('click', e => {
+        var el = e.target;
+        if (!this.el.contains(el)) {
+          this.data.set('listVisible', false)
+        }
+      });
+    }
+  };
+</script>
+<style>
+.san-cascader {
+  display: inline-block;
+}
+.san-cascader-input {
+  cursor: pointer;
+}
+</style>
