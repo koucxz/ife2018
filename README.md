@@ -46,4 +46,4 @@
 - [Cascader](https://github.com/koucxz/ife2018/tree/3.1/san/src/components/UiCascader.san)
 
 [3.2](https://github.com/koucxz/ife2018/tree/3.2/san/src/pages/PageCal.san)
-- [Calendar](https://github.com/koucxz/ife2018/tree/3.2/san/src/components/UiCalendar.san)
+- [Calendar](https://github.com/koucxz/ife2018/tree/3.2/san/src/components/calendar/UiCalendar.san)
