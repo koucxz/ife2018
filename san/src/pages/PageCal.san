@@ -1,0 +1,18 @@
+<template>
+  <div>
+    <san-calendar></san-calendar>
+  </div>
+</template>
+
+<script>
+  import UiCalendar from '../components/calendar/UiCalendar.san'
+  export default {
+    components: {
+      'san-calendar': UiCalendar
+    }
+  }
+</script>
+
+<style>
+
+</style>

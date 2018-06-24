@@ -1,0 +1,141 @@
+<template>
+   <div class="san-date_picker">
+    <input class="san-date_picker-input" type="text" value="{= dateText =}" on-focus="showDatePicker" readonly>
+    <div class="san-date_picker-panel" s-if="{{ showPanel }}">
+      <div class="san-date_picker-change">
+        <p class="san-date_picker-header">
+          <span class="san-date_picker-change-btn" on-click="changeMonth(-1)">&lt;</span>
+          <label class="san-date_picker-year">{{ year }}</label>
+          <label class="san-date_picker-month">{{ month }}</label>
+          <span class="san-date_picker-change-btn" on-click="changeMonth(1)">&gt;</span>
+        </p>
+      </div>
+      <div class="san-date_picker-days">
+        <p class="san-date_picker-weekday">
+          <span class="san-date_picker-weekitem" s-for="weekday,index in weekdays">{{weekday}}</span>
+        </p>
+        <div class="san-date_picker-day">
+          <span class="san-date_picker-dayitem{{!day.isThisMonth ? ' grey' : ''}}{{day.selected ? ' active' : ''}}" s-for="day, index in daysArray" on-click="changeDate(day.dayNum)">{{day.dayNum}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import { formatDate, getMonthDaysArray, weekTable } from './util'
+  export default {
+    initData() {
+      /**
+       * @prop {Date} dateInstance 日历对象或空值
+       */
+      return {
+        showPanel: false,
+        selectedDate: new Date(),
+        dateText: '',
+        daysArray: [],
+        weekdays: weekTable,
+        year: 0,
+        month: 0
+      }
+    },
+    changeMonth(val) {
+      let year = this.data.get('year')
+      let month = this.data.get('month')
+      let day = 0;
+      const dateArr = formatDate(this.data.get('selectedDate'))
+      month += val;
+      while (month > 12) {
+        year += 1
+        month -= 12
+      }
+      while (month < 1) {
+        year -= 1
+        month += 12
+      }
+      this.data.set('year', year)
+      this.data.set('month', month)
+      if (year === dateArr[0] && month === dateArr[1]) {
+        day = dateArr[2]
+      }
+      const arr = getMonthDaysArray(year, month, day)
+      this.data.set('daysArray', arr)
+    },
+    showDatePicker() {
+      this.data.set('showPanel', true)
+    },
+    hideDatePicker() {
+      this.data.set('showPanel', false)
+    },
+    changeDate(val) {
+      const year = this.data.get('year')
+      const month = this.data.get('month')
+      this.data.set('selectedDate', new Date(`${year}/${month}/${val}`))
+      this.updateDateComp()
+    },
+    updateDateComp(val) {
+      const dateArr = formatDate(this.data.get('selectedDate'))
+      this.data.set('year', dateArr[0])
+      this.data.set('month', dateArr[1])
+      this.data.set('dateText', `${dateArr[0]}-${dateArr[1]}-${dateArr[2]}`)
+      const arr = getMonthDaysArray(...dateArr)
+      this.data.set('daysArray', arr)
+      this.hideDatePicker()
+    },
+    created() {
+      this.updateDateComp()
+      document.addEventListener('click', e => {
+        var el = e.target;
+        if (!this.el.contains(el)) {
+          this.hideDatePicker()
+        }
+      });
+    }
+  }
+</script>
+
+<style>
+.san-date_picker {
+  position: relative;
+}
+.san-date_picker-panel {
+  position: absolute;
+  top: 28px;
+  padding: 10px;
+  width: 420px;
+  box-shadow: 0 0 10px 3px #ccc;
+}
+.san-date_picker-header {
+  display: flex;
+  justify-content: space-around;
+}
+.san-date_picker-change-btn {
+  cursor: pointer;
+}
+.san-date_picker-weekday {
+  display: flex;
+  margin: 10px 0;
+}
+.san-date_picker-weekitem {
+  flex: 1;
+  text-align:center;
+  line-height: 1.5;
+}
+.san-date_picker-day {
+  display: flex;
+  flex-wrap: wrap;
+}
+.san-date_picker-dayitem {
+  width: 14.2857%;
+  text-align: center;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.san-date_picker-dayitem.grey {
+  color: #ccc;
+  cursor: not-allowed;
+}
+.san-date_picker-dayitem.active {
+  color: skyblue;
+}
+</style>
